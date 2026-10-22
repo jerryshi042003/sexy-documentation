@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="A practical skill for visual documentation. Trace a source, inspect a rule, compare a workflow."
+    />
+    <title>Visual Explanations — Jerry Shi</title>
+    <link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="examples/style.css" />
+    <script defer src="examples/model.js"></script>
+    <script defer src="examples/app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to examples</a>
+    <svg class="symbol-bank" aria-hidden="true">
+      <defs>
+        <symbol id="ticket" viewBox="0 0 32 32">
+          <path d="M5 7h22v7a3 3 0 0 0 0 6v5H5v-5a3 3 0 0 0 0-6Z" />
+          <path d="M21 7v18" stroke-dasharray="2 3" />
+        </symbol>
+        <symbol id="sheet" viewBox="0 0 32 32">
+          <path d="M7 4h13l6 6v18H7Z M20 4v7h6 M11 16h11 M11 21h11 M16 16v9" />
+        </symbol>
+        <symbol id="database" viewBox="0 0 32 32">
+          <ellipse cx="16" cy="7" rx="11" ry="4" />
+          <path d="M5 7v17c0 6 22 6 22 0V7 M5 15c0 6 22 6 22 0" />
+        </symbol>
+        <symbol id="chart" viewBox="0 0 32 32">
+          <path d="M5 4v24h23 M10 23V14 M17 23V7 M24 23V11" />
+        </symbol>
+        <symbol id="check" viewBox="0 0 32 32">
+          <rect x="5" y="5" width="22" height="22" rx="5" />
+          <path d="m10 16 4 4 8-9" />
+        </symbol>
+      </defs>
+    </svg>
+    <header class="site-header">
+      <a href="#" class="wordmark"
+        ><img src="assets/mark.svg" width="28" height="28" alt="" />Visual
+        Explanations</a
+      >
+      <nav aria-label="Main">
+        <a href="#system">Examples</a
+        ><a
+          href="https://github.com/jerryshi042003/visual-explanations/blob/main/SKILL.md"
+          >The skill</a
+        ><a href="https://github.com/jerryshi042003/visual-explanations"
+          >GitHub ↗</a
+        >
+      </nav>
+    </header>
+    <main id="main">
+      <section class="intro">
+        <h1>Show how it works.</h1>
+        <p>
+          One skill for clear system maps, useful examples, and documentation
+          people can actually follow.
+        </p>
+        <div class="intro-links">
+          <a
+            class="primary"
+            href="https://github.com/jerryshi042003/visual-explanations/blob/main/SKILL.md"
+            >Read SKILL.md <span aria-hidden="true">↗</span></a
+          ><a href="#system"
+            >Try the examples <span aria-hidden="true">↓</span></a
+          >
+        </div>
+      </section>
+      <div class="section-nav">
+        <a href="#system">Trace a system</a
+        ><a href="#calculation">Explain a number</a
+        ><a href="#workflow">Compare a workflow</a>
+      </div>
+      <section id="system" class="example">
+        <div class="section-head">
+          <div>
+            <h2>Where does the number come from?</h2>
+            <p>Follow a sale through the rules to a reviewed payout.</p>
+          </div>
+          <span class="annotation">Fictional system · illustrative values</span>
+        </div>
+        <div class="toolbar">
+          <fieldset>
+            <legend>Business unit</legend>
+            <div class="segmented">
+              <button type="button" data-unit="harbor" aria-pressed="true">
+                Harbor FC</button
+              ><button type="button" data-unit="summit" aria-pressed="false">
+                Summit HC
+              </button>
+            </div>
+          </fieldset>
+          <p id="unit-description">
+            Harbor uses ticket sales less refunds as its commission basis.
+          </p>
+        </div>
+        <div
+          class="system-map"
+          aria-label="Source to payout, grouped by responsible team"
+        >
+          <svg class="flow-edges" aria-hidden="true">
+            <defs>
+              <marker
+                id="arrow"
+                viewBox="0 0 10 10"
+                refX="9"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto"
+              >
+                <path d="M0 0 10 5 0 10Z" fill="#245b91" />
+              </marker>
+            </defs>
+            <g></g>
+          </svg>
+          <div class="lane">
+            <div class="lane-heading">
+              Business operations<span>Owns source records</span>
+            </div>
+            <div class="node" data-stage="0">
+              <svg aria-hidden="true"><use href="#ticket" /></svg>
+              <div>
+                <h3 id="source-name">Ticket desk</h3>
+                <p id="source-role">Sales and refunds</p>
+                <code id="source-record">order H-104 · $1,000</code>
+              </div>
+            </div>
+            <div class="connector">
+              <span>Two inputs: orders + approved rules</span>
+            </div>
+            <div class="node rule-node">
+              <svg aria-hidden="true"><use href="#sheet" /></svg>
+              <div>
+                <h3>Rate workbook</h3>
+                <p>Approved business rules</p>
+                <code id="rule-record">net revenue × 10%</code>
+              </div>
+            </div>
+            <p class="access">Access: operations admin</p>
+          </div>
+          <div class="lane data-lane">
+            <div class="lane-heading">
+              Data team<span>Owns transformation</span>
+            </div>
+            <div class="node" data-stage="1">
+              <svg aria-hidden="true"><use href="#database" /></svg>
+              <div>
+                <h3>Warehouse</h3>
+                <p>Join the sale to its rule</p>
+                <code id="warehouse-record">$1,000 − $200 = $800</code>
+              </div>
+            </div>
+            <div class="connector">
+              <span>apply the matching rate</span><i aria-hidden="true"></i>
+            </div>
+            <div class="node" data-stage="2">
+              <svg aria-hidden="true"><use href="#chart" /></svg>
+              <div>
+                <h3>Payout report</h3>
+                <p>Calculated, not approved</p>
+                <code id="report-record">$800 × 10% = $80</code>
+              </div>
+            </div>
+            <p class="access">Access: data platform admin</p>
+          </div>
+          <div class="lane">
+            <div class="lane-heading">Finance<span>Owns acceptance</span></div>
+            <div class="node" data-stage="3">
+              <svg aria-hidden="true"><use href="#check" /></svg>
+              <div>
+                <h3>Payroll review</h3>
+                <p>Reconcile and approve</p>
+                <code id="payroll-record">review $80 for H-104</code>
+              </div>
+            </div>
+            <div class="boundary-note">
+              <span class="line-swatch" aria-hidden="true"></span>
+              <p>A report refresh does not mean the payout is approved.</p>
+            </div>
+            <p class="access">Access: payroll admin</p>
+          </div>
+        </div>
+        <div class="trace">
+          <div class="trace-controls">
+            <button id="trace-next" type="button">Trace one record →</button
+            ><button id="trace-reset" type="button" class="quiet">
+              Show whole system
+            </button>
+          </div>
+          <p id="trace-status" role="status">
+            The complete route is visible. Step through to follow one record.
+          </p>
+        </div>
+        <p class="map-key">
+          The source exports rows to the warehouse; the workbook supplies its
+          rule. The warehouse produces the report, which finance reviews. Arrows
+          connect records and rules to their consumers; lanes show
+          responsibility.
+        </p>
+      </section>
+      <section id="calculation" class="example">
+        <div class="section-head">
+          <div>
+            <h2>A negative adjustment can be correct.</h2>
+            <p>Change the case. Keep the input, rule, and result together.</p>
+          </div>
+          <span class="annotation">Standalone net-revenue example · 10%</span>
+        </div>
+        <div class="calculator">
+          <div class="case-select">
+            <label for="case">Worked example</label
+            ><select id="case">
+              <option value="sale">New sale</option>
+              <option value="refund">Refund after payment</option>
+              <option value="mixed">Sale and refund together</option>
+            </select>
+            <p id="case-explanation">
+              A $1,000 eligible sale creates $100 in commission.
+            </p>
+            <details>
+              <summary>See the commission rule</summary>
+              <div class="rule-example">
+                <p>Eligible change × 10% = commission change</p>
+                <p>
+                  A refund reverses the commission attributable to that refund.
+                  It is not a second charge for the original sale.
+                </p>
+                <p>
+                  This example assumes the refund is eligible for reversal and
+                  uses the original 10% rate.
+                </p>
+              </div>
+            </details>
+          </div>
+          <div class="math" aria-live="polite">
+            <div>
+              <span>New eligible sales</span><output id="sales">$1,000</output>
+            </div>
+            <div>
+              <span>Refund adjustment</span><output id="refund">$0</output>
+            </div>
+            <div class="subtotal">
+              <span>Eligible change</span><output id="basis">$1,000</output>
+            </div>
+            <div><span>Applied rate</span><output>10%</output></div>
+            <div class="result">
+              <span>Commission change</span
+              ><output id="commission">$100</output>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="workflow" class="example">
+        <div class="section-head">
+          <div>
+            <h2>Automation changes the handoffs.</h2>
+            <p>
+              Both paths publish the same approved report. Review still belongs
+              to a person.
+            </p>
+          </div>
+          <span class="annotation">Illustrative release process</span>
+        </div>
+        <div class="comparison">
+          <div>
+            <h3>Manual release</h3>
+            <ol>
+              <li><span>Analyst</span>Export the approved file</li>
+              <li><span>Analyst</span>Upload to the target workspace</li>
+              <li><span>Analyst</span>Check settings and refresh</li>
+              <li><span>Report owner</span>Review the published result</li>
+            </ol>
+            <p>Each handoff depends on someone repeating the procedure.</p>
+          </div>
+          <div>
+            <h3>Pipeline release</h3>
+            <ol>
+              <li><span>Analyst</span>Commit the approved change</li>
+              <li class="machine">
+                <span>Pipeline</span>Validate and deploy to the target
+              </li>
+              <li class="machine">
+                <span>Pipeline</span>Apply configured checks
+              </li>
+              <li><span>Report owner</span>Review the published result</li>
+            </ol>
+            <p>Repeatable deployment; business acceptance stays explicit.</p>
+          </div>
+        </div>
+      </section>
+      <section class="method" id="method">
+        <div>
+          <h2>The method behind the examples.</h2>
+          <p>
+            Research the real mechanism. Pick the example that resolves the
+            confusion. Give it a quiet, consistent interface. Check the result.
+          </p>
+          <a
+            href="https://github.com/jerryshi042003/visual-explanations/blob/main/SKILL.md"
+            >Get the complete skill ↗</a
+          >
+        </div>
+        <dl>
+          <div>
+            <dt>Show the source</dt>
+            <dd>A product name needs a role and an example record.</dd>
+          </div>
+          <div>
+            <dt>Keep the useful detail</dt>
+            <dd>A good dropdown reveals a rule. A bad one hides the answer.</dd>
+          </div>
+          <div>
+            <dt>Make interaction earn its place</dt>
+            <dd>A control changes the model, not just the decoration.</dd>
+          </div>
+        </dl>
+      </section>
+      <footer>
+        <span>Made by Jerry Shi · MIT</span>
+        <div>
+          <a
+            href="https://github.com/jerryshi042003/visual-explanations/blob/main/references/inspiration.md"
+            >Inspiration & credits</a
+          ><a
+            href="https://github.com/jerryshi042003/visual-explanations/blob/main/references/toolkit.md"
+            >HTML, CSS & GSAP</a
+          ><a href="https://github.com/jerryshi042003/visual-explanations"
+            >Source ↗</a
+          >
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
