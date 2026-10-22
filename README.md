@@ -1,12 +1,54 @@
-# Visual Explanations
+# Sexy Documentation
 
 **Show the source. Follow the rule. Make the result obvious.**
 
 One reusable skill for system diagrams, worked examples, and clear technical documentation. Built around a simple preference: less prose to decode, more mechanism to see.
 
-[**Explore the live examples →**](https://jerryshi042003.github.io/visual-explanations/) · [Read the skill](SKILL.md) · [Inspiration & credits](references/inspiration.md)
+[**Explore the live examples →**](https://jerryshi042003.github.io/sexy-documentation/) · [Read the skill](SKILL.md) · [Inspiration & credits](references/inspiration.md)
 
-![Visual Explanations: source systems grouped by ownership, with a worked calculation](assets/preview.png)
+## Five favorite visual patterns
+
+Public adaptations of the visual styles I keep coming back to. The original private diagrams stay private; these demos use fictional systems and values.
+
+### Hosting and cache boundaries
+
+What lives inside the server, what runs elsewhere, and why a second request can skip SQL. Adapted from my favorite hosting explanation and the “Zach idea” visual reference.
+
+[![Hosting and cache boundaries](assets/demo-hosting.png)](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#hosting)
+
+[Try first request / cache hit →](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#hosting)
+
+### Before-and-after slides
+
+The same records stay visible while one rule changes. One situation per slide, with short explanations beside the picture.
+
+[![Before-and-after import example](assets/demo-slides.png)](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#slides)
+
+[Step through the two situations →](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#slides)
+
+### Storage at a glance
+
+A spatial map makes size and containment obvious. Switch the copy-status overlay without changing the underlying amounts.
+
+[![Proportional storage map](assets/demo-storage.png)](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#storage)
+
+[Explore the storage map →](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#storage)
+
+### Trace the whole system
+
+Recognizable sources, one record, ownership boundaries, and business-unit differences. Every box says what it does.
+
+[![Source-to-payout system map](assets/demo-system.png)](https://jerryshi042003.github.io/sexy-documentation/#system)
+
+[Switch the business unit →](https://jerryshi042003.github.io/sexy-documentation/#system)
+
+### Show the calculation—and keep the useful dropdown
+
+A refund can correctly produce a negative commission. The rule, inputs, and result stay together.
+
+[![Refund calculation with its rule expanded](assets/demo-commission.png)](https://jerryshi042003.github.io/sexy-documentation/#calculation)
+
+[Try the commission cases →](https://jerryshi042003.github.io/sexy-documentation/#calculation)
 
 ## One entry point
 
@@ -24,21 +66,15 @@ Keep the useful examples and rule dropdowns. Verify facts before drawing.
 To install in Codex, clone this repository into an unused skill folder:
 
 ```sh
-git clone https://github.com/jerryshi042003/visual-explanations.git \
-  ~/.codex/skills/visual-explanations
+git clone https://github.com/jerryshi042003/sexy-documentation.git \
+  ~/.codex/skills/sexy-documentation
 ```
 
-Then invoke `$visual-explanations`. For another agent, point it at `SKILL.md`; no particular model, service, or library is required. Existing skills do not need to be replaced.
+Then invoke `$sexy-documentation`. For another agent, point it at `SKILL.md`; no particular model, service, or library is required. Existing skills do not need to be replaced.
 
-## See the method working
+Also included: [manual versus pipeline release](https://jerryshi042003.github.io/sexy-documentation/#workflow).
 
-| Example | What it teaches | Try it |
-| --- | --- | --- |
-| Source → payout | Source definitions, record identity, team boundaries, access owners | [Switch business units and trace a record](https://jerryshi042003.github.io/visual-explanations/#system) |
-| Commission adjustment | Input → rule → output, including a valid negative | [Choose the refund case and open the rule](https://jerryshi042003.github.io/visual-explanations/#calculation) |
-| Manual → pipeline | Which steps automation takes over and which ownership stays | [Compare both paths](https://jerryshi042003.github.io/visual-explanations/#workflow) |
-
-All organizations, systems, records, rules, and amounts in the gallery are fictional. They illustrate explanation patterns, not an employer's architecture or compensation policy.
+Business units, records, rules, and amounts are fictional. Product marks identify real tools; the diagrams do not describe an employer’s architecture or compensation policy.
 
 ## What this prefers
 

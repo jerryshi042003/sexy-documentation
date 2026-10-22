@@ -21,7 +21,7 @@ This is a reusable pitch, not a claim about which tools a particular earlier art
 
 ## A practical selection guide
 
-Start with the simplest implementation that carries the idea. These examples use plain HTML, CSS, original SVG symbols, and a small JavaScript model. They have no build step, CDN, analytics, font download, or runtime package dependency.
+Start with the simplest implementation that carries the idea. These examples use plain HTML, CSS, original SVG symbols, credited product marks, and a small JavaScript model. They have no build step, CDN, analytics, font download, or runtime package dependency.
 
 For more complex work, inspect current primary documentation:
 

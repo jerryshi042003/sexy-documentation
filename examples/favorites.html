@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Favorite visual patterns · Sexy Documentation</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="favorites.css" />
+    <script defer src="favorites.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="../"
+        ><img src="../assets/mark.svg" width="28" height="28" alt="" />Sexy
+        Documentation</a
+      >
+      <nav aria-label="Examples">
+        <a href="#hosting">Hosting</a><a href="#slides">Before / after</a
+        ><a href="#storage">Storage</a>
+      </nav>
+    </header>
+    <main>
+      <section class="favorite" id="hosting">
+        <div class="section-head">
+          <div>
+            <h1>Where it lives. What a request does.</h1>
+            <p>The browser, app process, and warehouse are separate places.</p>
+          </div>
+          <span class="annotation">Fictional architecture</span>
+        </div>
+        <div class="hosting-map">
+          <div class="computer">
+            <div class="system-title">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <rect x="3" y="5" width="26" height="18" rx="2" />
+                <path d="M11 28h10M16 23v5" />
+              </svg>
+              <h2>Browser</h2>
+            </div>
+            <p>Draws the interface</p>
+            <div class="mini-report">
+              <span>Season summary</span>
+              <div class="bars" aria-hidden="true">
+                <i style="height: 35%"></i><i style="height: 52%"></i
+                ><i style="height: 45%"></i><i style="height: 72%"></i
+                ><i style="height: 90%"></i>
+              </div>
+              <span>The report appears here</span>
+            </div>
+          </div>
+          <div class="request-edge">
+            <span>HTTPS request</span><b aria-hidden="true">→</b>
+          </div>
+          <div class="cloud">
+            <h2>Cloud app service</h2>
+            <p>Hosting boundary</p>
+            <div class="process">
+              <h3>Web server process</h3>
+              <p>One process can serve many requests</p>
+              <div class="inside">
+                <div class="service">
+                  <img
+                    src="../assets/nodejs.svg"
+                    alt="Node.js"
+                    width="32"
+                    height="32"
+                  />
+                  <h3>Files + APIs</h3>
+                  <p>Request handlers</p>
+                </div>
+                <span class="arrow" aria-hidden="true">→</span>
+                <div class="service cache">
+                  <h3>Report cache</h3>
+                  <p>In this process’s RAM</p>
+                  <div class="cache-record">
+                    <code>season-summary</code
+                    ><span id="cache-value">No saved result</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="boundary">
+              Restarting the process clears this in-memory cache.
+            </p>
+          </div>
+          <div class="query-edge">
+            <span id="query-edge-label">SQL on<br />cache miss</span
+            ><b aria-hidden="true">→</b>
+          </div>
+          <div class="warehouse">
+            <div class="system-title">
+              <img
+                src="../assets/databricks.svg"
+                alt="Databricks"
+                width="32"
+                height="32"
+              />
+              <h2>SQL warehouse</h2>
+            </div>
+            <p>Runs the report query</p>
+            <div class="query-result">
+              <span>Illustrative result</span><strong>480 tickets</strong
+              ><span>Returned to the app</span>
+            </div>
+          </div>
+        </div>
+        <div class="mode-bar">
+          <div class="segmented">
+            <button data-cache="miss" aria-pressed="true">First request</button
+            ><button data-cache="hit" aria-pressed="false">Cache hit</button>
+          </div>
+          <p id="cache-story" role="status">
+            No saved result → run SQL → save the answer → return it to the
+            browser.
+          </p>
+        </div>
+        <p class="tiny">
+          Same authorized report key, unchanged data and a valid cache lifetime
+          are assumed. Authentication is outside this small example.
+        </p>
+      </section>
+      <section class="favorite" id="slides">
+        <div class="section-head">
+          <div>
+            <h1 id="slide-title">A missed record needs another chance.</h1>
+            <p>
+              Keep the same records in view. Change only the rule that matters.
+            </p>
+          </div>
+          <span class="annotation">Fictional import</span>
+        </div>
+        <div class="situation" id="retry-slide">
+          <div class="record-row">
+            <h3>First import</h3>
+            <div class="records">
+              <span>A</span><span>B</span><span class="missing">C</span>
+            </div>
+            <p>A and B arrive. C is missed.</p>
+          </div>
+          <div class="record-row">
+            <h3>Old next run</h3>
+            <div class="records">
+              <span>A</span><span>B</span><span class="missing">C</span>
+            </div>
+            <p>The file was marked done. C is skipped again.</p>
+          </div>
+          <div class="record-row">
+            <h3>Corrected next run</h3>
+            <div class="records">
+              <span>A</span><span>B</span><span>C</span>
+            </div>
+            <p>Retry unacknowledged records. C gets another chance.</p>
+          </div>
+        </div>
+        <div class="situation" id="duplicate-slide" hidden>
+          <div class="record-row">
+            <h3>Before retry</h3>
+            <div class="records">
+              <span>A</span><span>B</span><span class="missing">C</span>
+            </div>
+            <p>The receiver already has A and B.</p>
+          </div>
+          <div class="record-row">
+            <h3>Retry all three</h3>
+            <div class="records">
+              <span>A</span><span>B</span><span>C</span>
+            </div>
+            <p>Use the same immutable record keys.</p>
+          </div>
+          <div class="record-row">
+            <h3>After upsert</h3>
+            <div class="records">
+              <span>A</span><span>B</span><span>C</span>
+            </div>
+            <p>One row per key. No extra A or B.</p>
+          </div>
+        </div>
+        <p class="takeaway" id="slide-takeaway">
+          A completed upload does not prove that every record was accepted.
+        </p>
+        <div class="slide-footer">
+          <span>Solid = present · dashed = missing</span>
+          <div>
+            <button id="slide-back" disabled>Back</button
+            ><output id="slide-count">1 / 2</output
+            ><button id="slide-next">Next →</button>
+          </div>
+        </div>
+      </section>
+      <section class="favorite" id="storage">
+        <div class="section-head">
+          <div>
+            <h1>See what takes up the space.</h1>
+            <p>
+              Area represents storage. The outline shows what still has only one
+              copy.
+            </p>
+          </div>
+          <span class="annotation">Illustrative 1,000 GB inventory</span>
+        </div>
+        <div class="storage-layout">
+          <div
+            class="treemap"
+            role="img"
+            aria-label="1,000 GB: Video 600, Photos 250, Projects 100, Documents 50. Video and projects have only one copy."
+          >
+            <div class="tile video one-copy">
+              <h2>Video</h2>
+              <strong>600 GB</strong><span>60% · one copy</span>
+            </div>
+            <div class="tile photos">
+              <h2>Photos</h2>
+              <strong>250 GB</strong><span>25% · backed up</span>
+            </div>
+            <div class="tile projects one-copy">
+              <h2>Projects</h2>
+              <strong>100 GB</strong><span>10% · one copy</span>
+            </div>
+            <div class="tile documents">
+              <h2>Documents</h2>
+              <strong>50 GB</strong><span>5% · backed up</span>
+            </div>
+          </div>
+          <aside>
+            <h2>Same data, two questions</h2>
+            <p>
+              Size tells you what uses capacity. Copy count tells you what can
+              be lost.
+            </p>
+            <div class="storage-stat">
+              <span>Total used</span><strong>1,000 GB</strong>
+            </div>
+            <div class="storage-stat">
+              <span>Only one copy</span><strong>700 GB</strong>
+            </div>
+            <button id="storage-toggle" aria-pressed="true">
+              Hide copy status
+            </button>
+            <p class="tiny">
+              Tile areas are exactly proportional before borders. Values are
+              invented for this example.
+            </p>
+          </aside>
+        </div>
+      </section>
+      <footer>
+        <span>Public adaptations of favorite visual patterns</span
+        ><a href="../">All examples</a
+        ><a href="https://github.com/jerryshi042003/sexy-documentation"
+          >README ↗</a
+        >
+      </footer>
+    </main>
+  </body>
+</html>

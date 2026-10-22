@@ -1,9 +1,9 @@
 ---
-name: visual-explanations
+name: sexy-documentation
 description: Build or refine visual documentation, system diagrams, and interactive worked examples from verified sources. Use when a reader needs to understand a mechanism, ownership boundary, calculation, or workflow comparison.
 ---
 
-# Visual explanations
+# Sexy Documentation
 
 Make the mechanism visible. A reader should be able to follow one real input, explain what changes, and identify who owns the next step.
 
@@ -55,7 +55,7 @@ Default to an immediately readable complete picture. Interaction should reveal c
 - Put unit/franchise differences close to the affected source or rule. Do not hide analyst-facing differences under an unrelated engineering heading.
 - A numbered trace must keep the same entity, direction, and places throughout. “Record received” and “customer opted in” are different states.
 
-See the runnable [system map](https://jerryshi042003.github.io/visual-explanations/#system) for fictional source records, ownership, and unit differences.
+See the runnable [system map](https://jerryshi042003.github.io/sexy-documentation/#system) for fictional source records, ownership, and unit differences.
 
 ## Teach with concrete examples
 
@@ -136,7 +136,9 @@ Fix actual defects in a bounded pass. Recheck changed behavior. Keep reusable te
 
 ## Companion material
 
-- [Live examples](https://jerryshi042003.github.io/visual-explanations/) — source map, commission cases, manual/automated comparison.
+- [Favorite demos](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html) — hosting/cache, before-and-after slides, proportional storage.
+
+- [Live examples](https://jerryshi042003.github.io/sexy-documentation/) — source map, commission cases, manual/automated comparison.
 - [Inspiration and attribution](references/inspiration.md) — exact sources and what transfers.
 - [Tool choices](references/toolkit.md) — implementation layers, GSAP, and artifact delivery.
 - [Evaluation cases](tests/evaluation-cases.md) — realistic prompts that test decisions, not phrasing.

@@ -23,4 +23,4 @@ Keep the main picture readable without a click. Keep a disclosure when it reveal
 
 ## Attribution and reuse
 
-The repository's original writing and example code are MIT licensed. Linked work remains under its own authors' terms. No affiliation or endorsement is claimed. When adding real vendor marks or external assets, record the original URL and usage terms; the example gallery uses original generic SVG symbols for fictional products.
+The repository's original writing and example code are MIT licensed. Linked work remains under its own authors' terms. No affiliation or endorsement is claimed. The favorite-pattern demos are new public adaptations, not screenshots of the private originals. When adding real vendor marks or external assets, record the original URL and usage terms; the source-map example uses original generic SVG symbols. The hosting demo includes Node.js and Databricks marks from [Simple Icons](https://github.com/simple-icons/simple-icons), whose icon collection is CC0; brand trademark rights remain with their owners.
