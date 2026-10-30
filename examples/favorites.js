@@ -59,7 +59,7 @@ el("slide-back").addEventListener("click", () => setSlide(false));
     b = document.createElement("button");
     b.type = "button";
     b.className = "tile";
-    b.style.setProperty("--art", f.art);
+    b.style.setProperty("--art", `url("../assets/storage/${f.art}.jpg")`);
     b.innerHTML =
       '<span class="badge">1 copy</span><span class="tile-name"></span><span class="tile-size"></span>';
     b.addEventListener("click", () => select(f.id));
@@ -155,7 +155,7 @@ el("slide-back").addEventListener("click", () => setSlide(false));
         `<p class="file-hint">Select a file to delete it or back it up.</p>` + status;
     } else {
       panel.innerHTML = `
-        <div class="file-art" style="--art:${f.art}"></div>
+        <div class="file-art" style="--art:url(&quot;../assets/storage/${f.art}.jpg&quot;)"></div>
         <h2>${f.name}</h2>
         <p>${f.type} · ${gb(f.gb)} · added ${monthLabel(f)}</p>
         <p class="file-copies${f.copies < 2 ? "" : " safe"}">${

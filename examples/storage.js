@@ -1,20 +1,20 @@
-/* Fictional files and sizes. Pure data and layout; no DOM. */
+/* Fictional files and sizes; thumbnails are frames from jerrythegoat.com projects. Pure data and layout; no DOM. */
 (function (root) {
   "use strict";
   const files = [
-    { id: "playoff", name: "Playoff highlights · raw", type: "Video", gb: 180, copies: 1, month: "2026-10", art: "linear-gradient(135deg,#1f3a5f,#8fb3d9)" },
-    { id: "senior", name: "Senior night cut.mov", type: "Video", gb: 140, copies: 1, month: "2026-09", art: "linear-gradient(135deg,#5a2d3c,#d9a08f)" },
-    { id: "drone", name: "Spring drone footage", type: "Video", gb: 110, copies: 2, month: "2026-05", art: "linear-gradient(135deg,#2f5d50,#a9d6b0)" },
-    { id: "grad", name: "Graduation 4K", type: "Video", gb: 95, copies: 1, month: "2026-06", art: "linear-gradient(135deg,#6b4e2e,#e8c58a)" },
-    { id: "lake", name: "Lake trip clips", type: "Video", gb: 75, copies: 2, month: "2026-08", art: "linear-gradient(135deg,#1d5c6b,#9bd4de)" },
-    { id: "japan", name: "Japan 2025", type: "Photos", gb: 90, copies: 2, month: "2026-01", art: "linear-gradient(135deg,#b4536a,#f3c0cc)" },
-    { id: "roll", name: "Camera roll 2024", type: "Photos", gb: 80, copies: 2, month: "2025-12", art: "linear-gradient(135deg,#3f4a6b,#c3cbe6)" },
-    { id: "family", name: "Family albums", type: "Photos", gb: 50, copies: 2, month: "2025-11", art: "linear-gradient(135deg,#7b6a4a,#efe0b8)" },
-    { id: "scans", name: "Negative scans", type: "Photos", gb: 30, copies: 1, month: "2026-09", art: "linear-gradient(135deg,#444,#bbb)" },
-    { id: "render", name: "Render cache", type: "Projects", gb: 60, copies: 1, month: "2026-10", art: "linear-gradient(135deg,#2b2b2b,#6e6e6e)" },
-    { id: "builds", name: "Site builds", type: "Projects", gb: 40, copies: 2, month: "2026-10", art: "linear-gradient(135deg,#355070,#6d8fb3)" },
-    { id: "tax", name: "Tax archive", type: "Documents", gb: 30, copies: 2, month: "2026-02", art: "linear-gradient(135deg,#8a7f6a,#d8cfbf)" },
-    { id: "notes", name: "Course notes", type: "Documents", gb: 20, copies: 2, month: "2026-08", art: "linear-gradient(135deg,#4f6b5e,#b9d1c4)" },
+    { id: "playoff", name: "Velodrome title shot", type: "Video", gb: 180, copies: 1, month: "2026-10", art: "velodrome" },
+    { id: "senior", name: "Kings arena flyover", type: "Video", gb: 140, copies: 1, month: "2026-09", art: "kings-arena" },
+    { id: "drone", name: "UCLA court render", type: "Video", gb: 110, copies: 2, month: "2026-05", art: "ucla-court" },
+    { id: "grad", name: "US Open stadium", type: "Video", gb: 95, copies: 1, month: "2026-06", art: "usopen-stadium" },
+    { id: "lake", name: "Riders zoom", type: "Video", gb: 75, copies: 2, month: "2026-08", art: "riders" },
+    { id: "japan", name: "Mountain goat sketch", type: "Photos", gb: 90, copies: 2, month: "2026-01", art: "goat" },
+    { id: "roll", name: "Weekend hikes", type: "Photos", gb: 80, copies: 2, month: "2025-12", art: "hikes" },
+    { id: "family", name: "Stadium crests", type: "Photos", gb: 50, copies: 2, month: "2025-11", art: "crests" },
+    { id: "scans", name: "Court concept", type: "Photos", gb: 30, copies: 1, month: "2026-09", art: "court-concept" },
+    { id: "render", name: "Rider splits chart", type: "Projects", gb: 60, copies: 1, month: "2026-10", art: "splits" },
+    { id: "builds", name: "Shield Genie screens", type: "Projects", gb: 40, copies: 2, month: "2026-10", art: "genie" },
+    { id: "tax", name: "Tennis CV writeup", type: "Documents", gb: 30, copies: 2, month: "2026-02", art: "tenniscv" },
+    { id: "notes", name: "Velo dashboard spec", type: "Documents", gb: 20, copies: 2, month: "2026-08", art: "velo-spec" },
   ];
   const monthName = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
   const groupers = {

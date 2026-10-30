@@ -337,7 +337,7 @@
   padding: 7px 9px;
   border: 0;
   border-radius: 3px;
-  background: var(--art) center / cover;
+  background: #223 var(--art) center / cover;
   color: white;
   text-align: left;
   display: flex;
@@ -345,7 +345,7 @@
   justify-content: flex-end;
   overflow: hidden;
   cursor: pointer;
-  text-shadow: 0 1px 2px rgb(0 0 0 / 0.55);
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.8);
   transition:
     left 0.5s,
     top 0.5s,
@@ -353,37 +353,12 @@
     height 0.5s,
     opacity 0.35s;
 }
-.tile::before,
 .tile::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 7px;
+  inset: 30% 0 0;
+  background: linear-gradient(transparent, rgb(0 0 0 / 0.78));
   pointer-events: none;
-}
-.tile.Video::before {
-  top: 0;
-  background: repeating-linear-gradient(90deg, #111 0 6px, transparent 6px 12px);
-}
-.tile.Video::after {
-  bottom: 0;
-  background: repeating-linear-gradient(90deg, #111 0 6px, transparent 6px 12px);
-}
-.tile.Projects::before {
-  inset: 0;
-  height: auto;
-  background:
-    linear-gradient(rgb(255 255 255 / 0.12) 1px, transparent 1px) 0 0 / 100% 14px,
-    linear-gradient(90deg, rgb(255 255 255 / 0.12) 1px, transparent 1px) 0 0 / 14px 100%;
-}
-.tile.Documents::before {
-  inset: 10px 10px auto;
-  height: 40%;
-  background: repeating-linear-gradient(
-    rgb(255 255 255 / 0.5) 0 2px,
-    transparent 2px 7px
-  );
 }
 .tile-name,
 .tile-size {
@@ -419,8 +394,8 @@
   text-shadow: none;
 }
 .tile.one-copy {
-  outline: 2px dashed rgb(255 255 255 / 0.9);
-  outline-offset: -5px;
+  outline: 2px dashed #c0574a;
+  outline-offset: -4px;
 }
 .tile.one-copy .badge {
   display: block;
