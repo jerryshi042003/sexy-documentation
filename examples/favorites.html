@@ -6,6 +6,7 @@
     <title>Favorite visual patterns · Sexy Documentation</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="favorites.css" />
+    <script defer src="storage.js"></script>
     <script defer src="favorites.js"></script>
   </head>
   <body>
@@ -26,7 +27,6 @@
             <h1>Where it lives. What a request does.</h1>
             <p>The browser, app process, and warehouse are separate places.</p>
           </div>
-          <span class="annotation">Fictional architecture</span>
         </div>
         <div class="hosting-map">
           <div class="computer">
@@ -114,20 +114,13 @@
             browser.
           </p>
         </div>
-        <p class="tiny">
-          Same authorized report key, unchanged data and a valid cache lifetime
-          are assumed. Authentication is outside this small example.
-        </p>
       </section>
       <section class="favorite" id="slides">
         <div class="section-head">
           <div>
             <h1 id="slide-title">A missed record needs another chance.</h1>
-            <p>
-              Keep the same records in view. Change only the rule that matters.
-            </p>
+            <p>Same three records. Only the retry rule changes.</p>
           </div>
-          <span class="annotation">Fictional import</span>
         </div>
         <div class="situation" id="retry-slide">
           <div class="record-row">
@@ -192,59 +185,46 @@
           <div>
             <h1>See what takes up the space.</h1>
             <p>
-              Area represents storage. The outline shows what still has only one
-              copy.
+              Every file is a tile sized by its storage. A dashed outline means
+              it has only one copy.
             </p>
           </div>
-          <span class="annotation">Illustrative 1,000 GB inventory</span>
+        </div>
+        <div class="storage-bar">
+          <fieldset>
+            <legend>Group by</legend>
+            <div class="segmented">
+              <button type="button" data-group="type" aria-pressed="true">
+                Type</button
+              ><button type="button" data-group="copies" aria-pressed="false">
+                Copies</button
+              ><button type="button" data-group="month" aria-pressed="false">
+                Month added
+              </button>
+            </div>
+          </fieldset>
+          <div class="storage-stats">
+            <div><span>Used</span><strong id="stat-used">1,000 GB</strong></div>
+            <div>
+              <span>Only one copy</span><strong id="stat-one">505 GB</strong>
+            </div>
+            <div><span>Freed</span><strong id="stat-freed">0 GB</strong></div>
+          </div>
         </div>
         <div class="storage-layout">
           <div
             class="treemap"
-            role="img"
-            aria-label="1,000 GB: Video 600, Photos 250, Projects 100, Documents 50. Video and projects have only one copy."
-          >
-            <div class="tile video one-copy">
-              <h2>Video</h2>
-              <strong>600 GB</strong><span>60% · one copy</span>
-            </div>
-            <div class="tile photos">
-              <h2>Photos</h2>
-              <strong>250 GB</strong><span>25% · backed up</span>
-            </div>
-            <div class="tile projects one-copy">
-              <h2>Projects</h2>
-              <strong>100 GB</strong><span>10% · one copy</span>
-            </div>
-            <div class="tile documents">
-              <h2>Documents</h2>
-              <strong>50 GB</strong><span>5% · backed up</span>
-            </div>
-          </div>
-          <aside>
-            <h2>Same data, two questions</h2>
-            <p>
-              Size tells you what uses capacity. Copy count tells you what can
-              be lost.
-            </p>
-            <div class="storage-stat">
-              <span>Total used</span><strong>1,000 GB</strong>
-            </div>
-            <div class="storage-stat">
-              <span>Only one copy</span><strong>700 GB</strong>
-            </div>
-            <button id="storage-toggle" aria-pressed="true">
-              Hide copy status
-            </button>
-            <p class="tiny">
-              Tile areas are exactly proportional before borders. Values are
-              invented for this example.
-            </p>
+            id="treemap"
+            role="group"
+            aria-label="Files sized by storage"
+          ></div>
+          <aside class="file-panel" id="file-panel">
+            <p class="file-hint">Select a file to delete it or back it up.</p>
           </aside>
         </div>
       </section>
       <footer>
-        <span>Public adaptations of favorite visual patterns</span
+        <span>Fictional systems, files and values</span
         ><a href="../">All examples</a
         ><a href="https://github.com/jerryshi042003/sexy-documentation"
           >README ↗</a

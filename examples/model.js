@@ -31,7 +31,7 @@
       sales: 0,
       refund: 20000,
       explanation:
-        "A $200 refund reverses $20 of a previously paid commission. The negative adjustment is expected.",
+        "A $200 refund reverses the $20 commission already paid on it.",
     },
     mixed: {
       sales: 100000,

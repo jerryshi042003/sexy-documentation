@@ -136,7 +136,8 @@ Fix actual defects in a bounded pass. Recheck changed behavior. Keep reusable te
 
 ## Companion material
 
-- [Favorite demos](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html) — hosting/cache, before-and-after slides, proportional storage.
+- [Favorite demos](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html) — hosting/cache, before-and-after slides, file-level storage map with group, delete and back up.
+- [Reconstruct, clarify, validate](references/my-workflows.md) — the three passes behind every example, each with a worked case.
 
 - [Live examples](https://jerryshi042003.github.io/sexy-documentation/) — source map, commission cases, manual/automated comparison.
 - [Inspiration and attribution](references/inspiration.md) — exact sources and what transfers.

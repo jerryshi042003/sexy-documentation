@@ -42,7 +42,7 @@ function paintTrace() {
   ];
   byId("trace-status").textContent =
     stage < 0
-      ? "The complete route is visible. Step through to follow one record."
+      ? "Step through to follow one record."
       : steps[stage];
   byId("trace-next").textContent =
     stage < 0

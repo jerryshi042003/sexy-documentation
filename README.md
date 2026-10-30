@@ -28,7 +28,7 @@ The same records stay visible while one rule changes. One situation per slide, w
 
 ### Storage at a glance
 
-A spatial map makes size and containment obvious. Switch the copy-status overlay without changing the underlying amounts.
+Every file is a tile sized by its storage. Group them by type, copy count or month and watch the map regroup, then delete or back up a file and see the totals move.
 
 [![Proportional storage map](assets/demo-storage.png)](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#storage)
 
@@ -44,7 +44,7 @@ Recognizable sources, one record, ownership boundaries, and business-unit differ
 
 ### Show the calculation—and keep the useful dropdown
 
-A refund can correctly produce a negative commission. The rule, inputs, and result stay together.
+A refund can correctly produce a negative commission. The rule stays one click away from the number.
 
 [![Refund calculation with its rule expanded](assets/demo-commission.png)](https://jerryshi042003.github.io/sexy-documentation/#calculation)
 
