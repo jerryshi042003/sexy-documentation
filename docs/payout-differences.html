@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Reconciliation: why each Harbor FC pay period differs from its comparator, to the cent." />
+    <title>Why the payout differs · Tideline Data Docs</title>
+    <link rel="icon" href="../assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/site.css" />
+    <script defer src="../assets/payout.js"></script>
+    <script defer src="../assets/docs.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <a class="wordmark" href="../"><img src="../assets/mark.svg" width="24" height="24" alt="" />Tideline Data Docs</a>
+        <nav class="site-nav" aria-label="Documents">
+          <a href="forms-to-crm.html">Forms to CRM</a>
+          <a href="source-status.html">Source status</a>
+          <a href="payout-differences.html" aria-current="page">Payout check</a>
+          <a href="new-season.html">New season</a>
+          <a href="renewal-email-incident.html">Incident</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <article class="doc">
+        <h1>Why the payout differs</h1>
+        <p class="answer">Every closed Harbor FC pay period reconciles to its comparator with nothing left over. The open period claims no difference until it has a fixed baseline.</p>
+
+        <div class="periods" role="tablist" aria-label="Pay periods">
+          <button type="button" role="tab" data-id="jan"><strong>Jan 6 – Feb 2</strong><span></span></button>
+          <button type="button" role="tab" data-id="feb"><strong>Feb 3 – Mar 2</strong><span></span></button>
+          <button type="button" role="tab" data-id="mar"><strong>Mar 3 – Mar 30</strong><span></span></button>
+          <button type="button" role="tab" data-id="apr"><strong>Mar 31 – Apr 27</strong><span></span></button>
+          <button type="button" role="tab" data-id="may"><strong>Apr 28 – May 25</strong><span></span></button>
+        </div>
+
+        <section id="closed" role="tabpanel">
+          <p><strong>Compared.</strong> <span id="compared"></span></p>
+          <svg class="waterfall" id="waterfall" role="img" aria-label="Each cause added in turn until it reaches the full difference"></svg>
+          <ul class="causes" id="causes"></ul>
+          <p class="equation"><span class="eq-label">Exact proof</span><code id="equation"></code><span>Residual <code id="residual"></code></span></p>
+          <p><strong>Status.</strong> <span id="status"></span></p>
+        </section>
+        <section id="open" role="tabpanel" hidden>
+          <div class="open-period">
+            <p><strong>No difference is claimed.</strong> The old report has no rows for this period, and source and roster data can still change before close.</p>
+            <p><strong>Status.</strong> <span id="open-status"></span></p>
+          </div>
+        </section>
+
+        <h2>How a dollar gets a cause</h2>
+        <details class="more">
+          <summary>The order causes are assigned in</summary>
+          <div class="body">
+            <ol>
+              <li>Match rows by sale id and line between the comparator and the current run.</li>
+              <li>Rows only in the current run are late or backfilled, or after the comparator's cutoff.</li>
+              <li>Matched rows that the current run holds for review are review holds.</li>
+              <li>Matched rows paid to a different rep are rep attribution.</li>
+              <li>Whatever remains on matched rows is rounding and allocation. If that bucket is larger than one cent per row, stop and investigate instead of netting it.</li>
+            </ol>
+          </div>
+        </details>
+        <details class="more">
+          <summary>What each comparator can and cannot prove</summary>
+          <div class="body">
+            <table>
+              <tr><th>Comparator</th><th>Good for</th><th>Not proof of</th></tr>
+              <tr><td>Prior spreadsheet</td><td>Explaining what changed from the old process</td><td>The full payroll total</td></tr>
+              <tr><td>Sent workbook</td><td>What payroll actually received</td><td>Corrections made after sending</td></tr>
+              <tr><td>Fixed close snapshot</td><td>The pipeline is stable run to run</td><td>That the business rules are right</td></tr>
+              <tr><td>Legacy rebuild</td><td>A dated checkpoint</td><td>Anything after its source cutoff</td></tr>
+            </table>
+          </div>
+        </details>
+        <details class="more">
+          <summary>Check a period yourself</summary>
+          <div class="body">
+            <div class="code-block"><pre><code>select cause, sum(commission_cents) / 100.0 as dollars
+from curated.payout.reconciliation
+where club = 'harbor' and period_start = date '2026-01-06'
+group by cause
+order by cause;</code></pre></div>
+            <p>The rows should sum to the period's difference. A non-zero <code>unexplained</code> row means the period is not reconciled.</p>
+          </div>
+        </details>
+
+        <dl class="doc-footer">
+          <div><dt>Owner</dt><dd>Data engineering with payroll</dd></div>
+          <div><dt>Evidence</dt><dd>Row-level match against each comparator file</dd></div>
+          <div><dt>Last validated</dt><dd>Jun 2, 2026</dd></div>
+          <div><dt>Document type</dt><dd>Reconciliation</dd></div>
+        </dl>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <span>Tideline Sports, Harbor FC, Summit HC and every system, record and amount here are fictional.</span>
+      <a href="https://github.com/jerryshi042003/sexy-documentation">Source</a>
+    </footer>
+  </body>
+</html>

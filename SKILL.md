@@ -55,7 +55,7 @@ Default to an immediately readable complete picture. Interaction should reveal c
 - Put unit/franchise differences close to the affected source or rule. Do not hide analyst-facing differences under an unrelated engineering heading.
 - A numbered trace must keep the same entity, direction, and places throughout. “Record received” and “customer opted in” are different states.
 
-See the runnable [system map](https://jerryshi042003.github.io/sexy-documentation/#system) for fictional source records, ownership, and unit differences.
+See the runnable [system graph](https://jerryshi042003.github.io/sexy-documentation/) for a fictional record traced across ownership lanes.
 
 ## Teach with concrete examples
 
@@ -136,10 +136,9 @@ Fix actual defects in a bounded pass. Recheck changed behavior. Keep reusable te
 
 ## Companion material
 
-- [Favorite demos](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html) — hosting/cache, before-and-after slides, file-level storage map with group, delete and back up.
 - [Reconstruct, clarify, validate](references/my-workflows.md) — the three passes behind every example, each with a worked case.
 
-- [Live examples](https://jerryshi042003.github.io/sexy-documentation/) — source map, commission cases, manual/automated comparison.
+- [Live data docs](https://jerryshi042003.github.io/sexy-documentation/) — the system graph as home, and five document types: [system page](https://jerryshi042003.github.io/sexy-documentation/docs/forms-to-crm.html), [source catalogue](https://jerryshi042003.github.io/sexy-documentation/docs/source-status.html), [reconciliation](https://jerryshi042003.github.io/sexy-documentation/docs/payout-differences.html), [runbook](https://jerryshi042003.github.io/sexy-documentation/docs/new-season.html) and [incident write-up](https://jerryshi042003.github.io/sexy-documentation/docs/renewal-email-incident.html).
 - [Inspiration and attribution](references/inspiration.md) — exact sources and what transfers.
 - [Tool choices](references/toolkit.md) — implementation layers, GSAP, and artifact delivery.
 - [Evaluation cases](tests/evaluation-cases.md) — realistic prompts that test decisions, not phrasing.

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Source catalogue: how far each source gets through the warehouse and what it is safe to use for." />
+    <title>Source status · Tideline Data Docs</title>
+    <link rel="icon" href="../assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/site.css" />
+    <script defer src="../assets/docs.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <a class="wordmark" href="../"><img src="../assets/mark.svg" width="24" height="24" alt="" />Tideline Data Docs</a>
+        <nav class="site-nav" aria-label="Documents">
+          <a href="forms-to-crm.html">Forms to CRM</a>
+          <a href="source-status.html" aria-current="page">Source status</a>
+          <a href="payout-differences.html">Payout check</a>
+          <a href="new-season.html">New season</a>
+          <a href="renewal-email-incident.html">Incident</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <article class="doc">
+        <h1>Source status</h1>
+        <p class="answer">Two sources are ready for any documented use. The other four stop before the curated layer; open one to see what it is safe for now and the gate it has to pass next.</p>
+
+        <div class="stage-matrix" role="table" aria-label="How far each source reaches">
+          <div class="row head" role="row"><span role="columnheader">Source</span><span role="columnheader">Landed</span><span role="columnheader">Raw</span><span role="columnheader">Clean</span><span role="columnheader">Curated</span><span role="columnheader">In use</span><span class="status" role="columnheader"></span></div>
+          <a class="row" role="row" href="#gatepass"><span class="name">Gatepass ticketing</span><i class="seg done"></i><i class="seg done"></i><i class="seg done"></i><i class="seg done"></i><i class="seg stop"></i><span class="status ready">Ready</span></a>
+          <a class="row" role="row" href="#relay"><span class="name">Relay CRM</span><i class="seg done"></i><i class="seg done"></i><i class="seg done"></i><i class="seg done"></i><i class="seg stop"></i><span class="status ready">Ready</span></a>
+          <a class="row" role="row" href="#shopline"><span class="name">Club shop orders</span><i class="seg done"></i><i class="seg done"></i><i class="seg done"></i><i class="seg stop"></i><i class="seg"></i><span class="status limited">Limited</span></a>
+          <a class="row" role="row" href="#league"><span class="name">League fan exchange</span><i class="seg done"></i><i class="seg done"></i><i class="seg stop"></i><i class="seg"></i><i class="seg"></i><span class="status limited">Limited</span></a>
+          <a class="row" role="row" href="#rinkbook"><span class="name">RinkBook camps</span><i class="seg done"></i><i class="seg stop"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><span class="status limited">Limited</span></a>
+          <a class="row" role="row" href="#concourse"><span class="name">Concourse food and drink</span><i class="seg done"></i><i class="seg paused"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><span class="status blocked">Blocked</span></a>
+        </div>
+
+        <details class="source" id="gatepass" open>
+          <summary><span><strong>Gatepass ticketing</strong><small>Orders, events, accounts, payments and gate scans</small></span><span class="status ready">Ready</span></summary>
+          <div class="body">
+            <ol class="track" aria-label="Reaches approved use"><li class="done">Landed</li><li class="done">Raw</li><li class="done">Clean</li><li class="done">Curated</li><li class="current">In use</li></ol>
+            <dl class="facts">
+              <dt>Use now</dt><dd>Ticket revenue, attendance and payout reports at order-line grain.</dd>
+              <dt>Next gate</dt><dd>Confirm each club's event and product rules before a new use.</dd>
+              <dt>Start here</dt><dd><code>curated.tickets</code>; product rules in <code>curated.mapping</code>.</dd>
+            </dl>
+          </div>
+        </details>
+        <details class="source" id="relay">
+          <summary><span><strong>Relay CRM</strong><small>Contacts, leads, opportunities and campaigns</small></span><span class="status ready">Ready</span></summary>
+          <div class="body">
+            <ol class="track" aria-label="Reaches approved use"><li class="done">Landed</li><li class="done">Raw</li><li class="done">Clean</li><li class="done">Curated</li><li class="current">In use</li></ol>
+            <dl class="facts">
+              <dt>Use now</dt><dd>Approved list and sales-pipeline questions.</dd>
+              <dt>Next gate</dt><dd>Confirm what a campaign, owner or activity means for each new use.</dd>
+              <dt>Start here</dt><dd><code>curated.crm</code>. The nightly copy lands at 02:30.</dd>
+            </dl>
+          </div>
+        </details>
+        <details class="source" id="shopline">
+          <summary><span><strong>Club shop orders</strong><small>Online and in-stadium merchandise</small></span><span class="status limited">Limited</span></summary>
+          <div class="body">
+            <ol class="track" aria-label="Stops at Curated"><li class="done">Landed</li><li class="done">Raw</li><li class="done">Clean</li><li class="current">Curated</li><li>In use</li></ol>
+            <dl class="facts">
+              <dt>Use now</dt><dd>Daily revenue totals by club and channel.</dd>
+              <dt>Next gate</dt><dd>Match shop orders to ticket accounts; about a third of in-stadium orders have no email.</dd>
+              <dt>Start here</dt><dd><code>curated.shop.daily_sales</code>; do not join to fans yet.</dd>
+            </dl>
+          </div>
+        </details>
+        <details class="source" id="league">
+          <summary><span><strong>League fan exchange</strong><small>Fan profiles and purchases shared by the league</small></span><span class="status limited">Limited</span></summary>
+          <div class="body">
+            <ol class="track" aria-label="Stops at Clean"><li class="done">Landed</li><li class="done">Raw</li><li class="current">Clean</li><li>Curated</li><li>In use</li></ol>
+            <dl class="facts">
+              <dt>Use now</dt><dd>Validating the feed and reconciling it with Gatepass.</dd>
+              <dt>Next gate</dt><dd>Approve the purpose, which club may use it, and how it interacts with a fan's own consent.</dd>
+              <dt>Start here</dt><dd><code>clean.league_exchange</code>. It is not a marketing audience.</dd>
+            </dl>
+          </div>
+        </details>
+        <details class="source" id="rinkbook">
+          <summary><span><strong>RinkBook camps</strong><small>Camp, clinic and league registrations</small></span><span class="status limited">Limited</span></summary>
+          <div class="body">
+            <ol class="track" aria-label="Stops at Raw"><li class="done">Landed</li><li class="current">Raw</li><li>Clean</li><li>Curated</li><li>In use</li></ol>
+            <dl class="facts">
+              <dt>Use now</dt><dd>Investigating the source. Only two of five rinks send data today.</dd>
+              <dt>Next gate</dt><dd>All five rinks, and a guardian record for every registration under 18.</dd>
+              <dt>Start here</dt><dd><code>raw.rinkbook.registrations</code>; never assume minors are excluded.</dd>
+            </dl>
+          </div>
+        </details>
+        <details class="source" id="concourse">
+          <summary><span><strong>Concourse food and drink</strong><small>Point-of-sale transactions inside the stadium</small></span><span class="status blocked">Blocked</span></summary>
+          <div class="body">
+            <ol class="track" aria-label="Paused at Raw"><li class="done">Landed</li><li class="paused">Raw, paused</li><li>Clean</li><li>Curated</li><li>In use</li></ol>
+            <dl class="facts">
+              <dt>Use now</dt><dd>Reading history up to the pause only.</dd>
+              <dt>Next gate</dt><dd>A named owner for the feed and one report that needs it.</dd>
+              <dt>Start here</dt><dd><code>raw.concourse.transactions</code>, history only.</dd>
+            </dl>
+          </div>
+        </details>
+
+        <h2>What the stages mean</h2>
+        <table>
+          <tr><th>Stage</th><th>A source is here when</th></tr>
+          <tr><td>Landed</td><td>Files or API pulls arrive on schedule.</td></tr>
+          <tr><td>Raw</td><td>Stored as received, with load time and file name.</td></tr>
+          <tr><td>Clean</td><td>Typed, deduplicated and keyed; one row per source record.</td></tr>
+          <tr><td>Curated</td><td>Joined to shared keys (fan, event, club) with tested rules.</td></tr>
+          <tr><td>In use</td><td>An owner has approved at least one documented use.</td></tr>
+        </table>
+
+        <dl class="doc-footer">
+          <div><dt>Owner</dt><dd>Data engineering</dd></div>
+          <div><dt>Evidence</dt><dd>Job history and table row counts for each stage</dd></div>
+          <div><dt>Last validated</dt><dd>Nov 3, 2026</dd></div>
+          <div><dt>Document type</dt><dd>Source catalogue</dd></div>
+        </dl>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <span>Tideline Sports, Harbor FC, Summit HC and every system, record and amount here are fictional.</span>
+      <a href="https://github.com/jerryshi042003/sexy-documentation">Source</a>
+    </footer>
+  </body>
+</html>

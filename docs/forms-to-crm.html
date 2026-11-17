@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="System page: three routes from fan forms into Relay CRM." />
+    <title>Fan forms to CRM · Tideline Data Docs</title>
+    <link rel="icon" href="../assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <a class="wordmark" href="../"><img src="../assets/mark.svg" width="24" height="24" alt="" />Tideline Data Docs</a>
+        <nav class="site-nav" aria-label="Documents">
+          <a href="forms-to-crm.html" aria-current="page">Forms to CRM</a>
+          <a href="source-status.html">Source status</a>
+          <a href="payout-differences.html">Payout check</a>
+          <a href="new-season.html">New season</a>
+          <a href="renewal-email-incident.html">Incident</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <article class="doc">
+        <h1>Fan forms to CRM</h1>
+        <p class="answer">Three authenticated routes move form submissions from Tidemail straight into Relay CRM. None of them pass through the warehouse.</p>
+
+        <div class="route-map wide" id="routes" role="group" aria-label="Three routes from Tidemail to Relay CRM">
+          <div class="route-head" aria-hidden="true">
+            <span>Business use</span><span></span><span>Tidemail action</span><span></span><span>Route</span><span></span><span>Relay CRM result</span>
+          </div>
+          <a class="route-row" href="#harbor-leads">
+            <span class="use"><small>Harbor FC</small><strong>Match-day leads</strong></span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell">Ticket interest or RSVP form</span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell route">harbor_leads</span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell">Contact, lead and rep alert</span>
+          </a>
+          <a class="route-row" href="#summit-memberships">
+            <span class="use"><small>Summit HC</small><strong>Season memberships</strong></span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell">Membership interest form</span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell route">summit_memberships</span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell">Contact and one open 2027 membership opportunity</span>
+          </a>
+          <a class="route-row" href="#unsubscribe">
+            <span class="use"><small>Both clubs</small><strong>Unsubscribe</strong></span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell">Email address and club</span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell route">crm_unsubscribe</span>
+            <span class="arrow" aria-hidden="true">→</span>
+            <span class="cell">That club's opt-out field</span>
+          </a>
+        </div>
+
+        <h2 id="harbor-leads">1. Harbor FC match-day leads</h2>
+        <dl class="facts">
+          <dt>Route</dt><dd><code>harbor_leads</code></dd>
+          <dt>Behaviour</dt><dd>Match or create the Contact. Keep the owner if a rep worked the Contact in the last 90 days, otherwise assign the next eligible rep. Create the mapped lead and alert that rep.</dd>
+          <dt>Proof</dt><dd>
+            <ol class="proof-chain"><li>form row</li><li>route receipt</li><li>Contact</li><li>lead</li><li>owner and alert</li></ol>
+          </dd>
+        </dl>
+        <p>Replaying the same form row cannot create a second lead. Newsletter-only sign-ups stop before any CRM write.</p>
+
+        <h2 id="summit-memberships">2. Summit HC season memberships</h2>
+        <dl class="facts">
+          <dt>Route</dt><dd><code>summit_memberships</code></dd>
+          <dt>Behaviour</dt><dd>Create one open 2027 membership opportunity per Contact. Later submissions update that opportunity without changing its owner. A new one is allowed only after earlier ones are closed.</dd>
+          <dt>Proof</dt><dd>
+            <ol class="proof-chain"><li>form row</li><li>stored receipt</li><li>Contact</li><li>2027 opportunity</li></ol>
+          </dd>
+        </dl>
+
+        <h2 id="unsubscribe">3. Unsubscribe</h2>
+        <dl class="facts">
+          <dt>Route</dt><dd><code>crm_unsubscribe</code></dd>
+          <dt>Behaviour</dt><dd>Match the Contact by email and set only the named club's do-not-email field. The other club's field is never touched.</dd>
+          <dt>Proof</dt><dd>
+            <ol class="proof-chain"><li>preference row</li><li>matched Contact</li><li>that club's field</li><li>other fields unchanged</li></ol>
+          </dd>
+        </dl>
+        <p>An unknown club name or a missing Contact produces no CRM write.</p>
+
+        <div class="callout">
+          <p><strong>What a success response proves.</strong> A 200 from a route proves that route finished. It does not prove the form row existed or that the CRM record is right. Check both ends of the proof chain.</p>
+        </div>
+
+        <details class="more">
+          <summary>Authentication and retries</summary>
+          <div class="body">
+            <p>All three routes require a function key held by Tidemail. A request without it is rejected before any lookup.</p>
+            <p>Tidemail retries a failed call three times over ten minutes. Each route stores a receipt keyed on the form row id, so a retry after a timeout finds the receipt and returns the original result instead of writing twice.</p>
+          </div>
+        </details>
+        <details class="more">
+          <summary>How to check one submission end to end</summary>
+          <div class="body">
+            <ol>
+              <li>Find the form row in Tidemail by email and submission time.</li>
+              <li>Find its receipt in the route log by form row id. No receipt means the call never arrived.</li>
+              <li>Open the Contact in Relay CRM and confirm the lead, opportunity or opt-out field the route should have written.</li>
+            </ol>
+          </div>
+        </details>
+        <details class="more">
+          <summary>Who owns what</summary>
+          <div class="body">
+            <table>
+              <tr><th>Part</th><th>Owner</th></tr>
+              <tr><td>Forms and their fields</td><td>Marketing operations</td></tr>
+              <tr><td>Routes, receipts and retries</td><td>Data engineering</td></tr>
+              <tr><td>Lead assignment rules</td><td>Ticket sales leadership</td></tr>
+            </table>
+          </div>
+        </details>
+
+        <dl class="doc-footer">
+          <div><dt>Owner</dt><dd>Data engineering</dd></div>
+          <div><dt>Evidence</dt><dd>One live submission per route, traced form → receipt → CRM</dd></div>
+          <div><dt>Last validated</dt><dd>Oct 2, 2026</dd></div>
+          <div><dt>Document type</dt><dd>System page</dd></div>
+        </dl>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <span>Tideline Sports, Harbor FC, Summit HC and every system, record and amount here are fictional.</span>
+      <a href="https://github.com/jerryshi042003/sexy-documentation">Source</a>
+    </footer>
+  </body>
+</html>

@@ -1,107 +1,47 @@
 # Sexy Documentation
 
-**Show the source. Follow the rule. Make the result obvious.**
+A skill for documentation people can use, and a live site that shows it working.
 
-One reusable skill for system diagrams, worked examples, and clear technical documentation. Built around a simple preference: less prose to decode, more mechanism to see.
+**[Open the site →](https://jerryshi042003.github.io/sexy-documentation/)**
 
-[**Explore the live examples →**](https://jerryshi042003.github.io/sexy-documentation/) · [Read the skill](SKILL.md) · [Inspiration & credits](references/inspiration.md)
+The site is the data docs of a made-up sports group, Tideline Sports (Harbor FC and Summit HC). The home page is a system graph: three ownership lanes, nine systems, and one order you can trace from ticket sale to payroll review. Every node opens the document that covers it.
 
-## Five favorite visual patterns
+## Five document types
 
-Public adaptations of the visual styles I keep coming back to. The original private diagrams stay private; these demos use fictional systems and values.
+Each page follows the structure of a real working document. All content is fictional.
 
-### Hosting and cache boundaries
+| Page | Type | What it has to do |
+| --- | --- | --- |
+| [Fan forms to CRM](https://jerryshi042003.github.io/sexy-documentation/docs/forms-to-crm.html) | System page | Route map; behaviour and proof per route; what a success response does not prove |
+| [Source status](https://jerryshi042003.github.io/sexy-documentation/docs/source-status.html) | Source catalogue | How far each source reaches; Ready, Limited or Blocked; use now, next gate, start here |
+| [Why the payout differs](https://jerryshi042003.github.io/sexy-documentation/docs/payout-differences.html) | Reconciliation | Comparator, dollar causes and an exact equation with no residual; open periods claim nothing |
+| [New season setup](https://jerryshi042003.github.io/sexy-documentation/docs/new-season.html) | Runbook | Who does what in order, what runs on its own, when code must change, validation SQL |
+| [Duplicate renewal emails](https://jerryshi042003.github.io/sexy-documentation/docs/renewal-email-incident.html) | Incident write-up | Hotfix, durable fix and unrelated cleanup kept apart; chronology; verified versus inferred |
 
-What lives inside the server, what runs elsewhere, and why a second request can skip SQL. Adapted from my favorite hosting explanation and the “Zach idea” visual reference.
+Every page uses the same frame: a one-line answer, the diagram, details in disclosures, and an owner / evidence / last-validated footer.
 
-[![Hosting and cache boundaries](assets/demo-hosting.png)](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#hosting)
+## The skill
 
-[Try first request / cache hit →](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#hosting)
-
-### Before-and-after slides
-
-The same records stay visible while one rule changes. One situation per slide, with short explanations beside the picture.
-
-[![Before-and-after import example](assets/demo-slides.png)](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#slides)
-
-[Step through the two situations →](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#slides)
-
-### Storage at a glance
-
-Every file is a tile sized by its storage. Group them by type, copy count or month and watch the map regroup, then delete or back up a file and see the totals move.
-
-[![Proportional storage map](assets/demo-storage.png)](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#storage)
-
-[Explore the storage map →](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#storage)
-
-### Trace the whole system
-
-Recognizable sources, one record, ownership boundaries, and business-unit differences. Every box says what it does.
-
-[![Source-to-payout system map](assets/demo-system.png)](https://jerryshi042003.github.io/sexy-documentation/#system)
-
-[Switch the business unit →](https://jerryshi042003.github.io/sexy-documentation/#system)
-
-### Show the calculation—and keep the useful dropdown
-
-A refund can correctly produce a negative commission. The rule stays one click away from the number.
-
-[![Refund calculation with its rule expanded](assets/demo-commission.png)](https://jerryshi042003.github.io/sexy-documentation/#calculation)
-
-[Try the commission cases →](https://jerryshi042003.github.io/sexy-documentation/#calculation)
-
-## One entry point
-
-[**SKILL.md**](SKILL.md) contains the complete workflow: source research, ownership boundaries, business-unit differences, visual choices, worked examples, typography, purposeful interaction, prompt templates, and verification.
-
-Give it to your coding agent with the task and source material:
-
-```text
-Read SKILL.md. Explain this system for a new analyst.
-Trace one record from its source to the final result.
-Show what changes between business units and who owns each handoff.
-Keep the useful examples and rule dropdowns. Verify facts before drawing.
-```
-
-To install in Codex, clone this repository into an unused skill folder:
+[SKILL.md](SKILL.md) holds the workflow: reconstruct the system from its sources, choose the form that answers the reader's question, keep useful disclosures, and verify the result. To install in Codex:
 
 ```sh
 git clone https://github.com/jerryshi042003/sexy-documentation.git \
   ~/.codex/skills/sexy-documentation
 ```
 
-Then invoke `$sexy-documentation`. For another agent, point it at `SKILL.md`; no particular model, service, or library is required. Existing skills do not need to be replaced.
+Then invoke `$sexy-documentation`. Any other agent can be pointed at `SKILL.md`.
 
-Also included: [manual versus pipeline release](https://jerryshi042003.github.io/sexy-documentation/#workflow).
+Supporting notes: [reconstruct, clarify, validate](references/my-workflows.md), [inspiration and attribution](references/inspiration.md), [tool choices](references/toolkit.md), [evaluation cases](tests/evaluation-cases.md).
 
-Business units, records, rules, and amounts are fictional. Product marks identify real tools; the diagrams do not describe an employer’s architecture or compensation policy.
+## Run locally
 
-## What this prefers
-
-- Visible source meaning and responsibility, rather than unexplained product names.
-- Consistent type, restrained color, readable labels, and short nearby explanations.
-- Examples that resolve the actual confusion, including exceptions and reconciliation.
-- Useful dropdowns preserved; redundant wrappers and hidden main explanations removed.
-- Controls connected to a real model; motion only when it explains a change.
-
-[The inspiration notes](references/inspiration.md) credit Karpathy, Bret Victor, Simon Willison, Red Blob Games, Mike Bostock, Distill, Jason Zhou, Impeccable, and explanation-skill authors. [The toolkit](references/toolkit.md) explains HTML, CSS, SVG, JavaScript, and GSAP without pretending a library alone makes an explanation good.
-
-## Run and adapt
-
-Open `index.html` directly, or serve the directory:
+No build step and no dependencies.
 
 ```sh
 python3 -m http.server 8000
+node --test tests/reconciliation.test.cjs
 ```
 
-The gallery has no build step or external runtime dependencies. Content lives in `index.html`, design tokens in `examples/style.css`, and fictional calculations in `examples/model.js`.
-
-Run the calculation checks with Node.js:
-
-```sh
-node --test tests/model.test.cjs
-```
-
-Use [the evaluation cases](tests/evaluation-cases.md) to assess an agent's decisions. They are a test plan, not a claim of a measured teaching benchmark.
+Pages live in `index.html` and `docs/`; styles in `assets/site.css`; the graph in `assets/graph.js`; pay-period data and the waterfall in `assets/payout.js`. The test checks that every closed pay period reconciles to the cent.
 
 MIT licensed original writing and code. Linked sources keep their own terms.

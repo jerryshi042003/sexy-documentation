@@ -18,7 +18,7 @@ Read the actual conversations, jobs and configuration. A transcript names a lead
 | Membership desk "sends files Friday" | The ingestion schedule | A nightly export, not a Friday file. The Friday step was a manual check that stopped in July. |
 | Finance "gets an email" | The report refresh and payroll review | The refresh sends nothing. Finance opens the report and approves in a separate step. A refresh is not an approval. |
 
-**Output:** a source map with one example order traced end to end, one rule shown per business unit, and the finance approval drawn as a separate owned step. The Friday check appears as "retired July," not as a live arrow. The live version of that map is the [system example](https://jerryshi042003.github.io/sexy-documentation/#system).
+**Output:** a source map with one example order traced end to end, one rule shown per business unit, and the finance approval drawn as a separate owned step. The Friday check appears as "retired July," not as a live arrow. The live version of that map is the [system graph](https://jerryshi042003.github.io/sexy-documentation/).
 
 ## 2. Clarify what was actually asked
 
@@ -35,7 +35,7 @@ Recover the intended outcome from a rough request. Do not replace it with a gene
 - "Delete stuff" means a real action with a consequence the reader can see: the file leaves, the totals move, and it can be undone.
 - Nothing in the request asks for a new page, a backend, or real data. Fictional files keep it publishable.
 
-**Output:** the [storage example](https://jerryshi042003.github.io/sexy-documentation/examples/favorites.html#storage): thirteen fictional files, three groupings that animate the regroup, and Delete / Back up / Undo with totals that respond. Questions that were not asked: none. The request already said what "done" looks like.
+**Output:** a storage example (since retired from the site): thirteen fictional files, three groupings that animate the regroup, and Delete / Back up / Undo with totals that respond. Questions that were not asked: none. The request already said what "done" looks like.
 
 ## 3. Validate the change, and say which kind of done it is
 
@@ -55,6 +55,6 @@ Test the affected behavior, inspect the real deployed result, and keep four stat
 | Deploy | Published files on the live page match the commit. | Deployed |
 | Observe | Opened the refund case on the live page; the row reads −$20 with the $200 refund beside it. | Observed on the real page |
 
-**Output:** the [calculation example](https://jerryshi042003.github.io/sexy-documentation/#calculation). The request was wrong about the defect and the pass said so, with the rule and the number, before changing anything. Clamping to zero would have hidden a correct reversal.
+**Output:** a calculation example, since replaced by the [reconciliation page](https://jerryshi042003.github.io/sexy-documentation/docs/payout-differences.html). The request was wrong about the defect and the pass said so, with the rule and the number, before changing anything. Clamping to zero would have hidden a correct reversal.
 
 The reusable visual workflow built on these passes is [SKILL.md](../SKILL.md). These are summaries of method, not installed packages, and they do not enforce themselves.

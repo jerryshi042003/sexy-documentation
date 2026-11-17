@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Runbook: set up a new ticketing season for Harbor FC and Summit HC." />
+    <title>New season setup · Tideline Data Docs</title>
+    <link rel="icon" href="../assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/site.css" />
+    <script defer src="../assets/docs.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <a class="wordmark" href="../"><img src="../assets/mark.svg" width="24" height="24" alt="" />Tideline Data Docs</a>
+        <nav class="site-nav" aria-label="Documents">
+          <a href="forms-to-crm.html">Forms to CRM</a>
+          <a href="source-status.html">Source status</a>
+          <a href="payout-differences.html">Payout check</a>
+          <a href="new-season.html" aria-current="page">New season</a>
+          <a href="renewal-email-incident.html">Incident</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <article class="doc">
+        <h1>New season setup</h1>
+        <p class="answer">Add the season's event codes and product rules before the first sale. The nightly ticket job builds everything else; check it the next morning.</p>
+
+        <div class="runorder wide" role="group" aria-label="Who does what, in order">
+          <div class="who">You<span>before the first sale</span></div>
+          <div class="steps">
+            <a class="step" href="#step-1"><b>1</b>Add event codes</a>
+            <a class="step" href="#step-2"><b>2</b>Update product rules</a>
+          </div>
+          <div class="who">Ticket job<span>nightly, 02:00</span></div>
+          <div class="steps">
+            <span class="step auto">event_dim</span><span class="gap" aria-hidden="true">→</span>
+            <span class="step auto">season_dim</span><span class="gap" aria-hidden="true">→</span>
+            <span class="step auto">product_dim</span><span class="gap" aria-hidden="true">→</span>
+            <span class="step auto">item_product</span>
+          </div>
+          <div class="who">You<span>next morning</span></div>
+          <div class="steps">
+            <a class="step" href="#validate"><b>3</b>Run the three checks</a>
+          </div>
+          <div class="who">Optional<span>any time</span></div>
+          <div class="steps">
+            <a class="step opt" href="#optional">Opponents</a>
+            <a class="step opt" href="#optional">Theme nights</a>
+          </div>
+        </div>
+
+        <h2>Required</h2>
+        <ol class="required">
+          <li id="step-1">
+            <strong>Add every event code for the season to <code>raw.ticket_setup.event_season_map</code>.</strong>
+            This table is the only source of an event's season. Without it, events, seasons and products will not line up, and sales land with no season.
+          </li>
+          <li id="step-2">
+            <strong>Update the season's product rules in <code>raw.ticket_setup.price_code_rules</code>.</strong>
+            Summit HC maps price codes to products here. Harbor FC maps by section and needs no change unless it adds a product.
+          </li>
+        </ol>
+
+        <h2>Runs automatically</h2>
+        <p>Once the season is in <code>event_season_map</code>, the nightly ticket job rebuilds these four tables. You do not need to rerun them.</p>
+        <ul>
+          <li><code>curated.tickets.event_dim</code></li>
+          <li><code>curated.tickets.season_dim</code></li>
+          <li><code>curated.tickets.product_dim</code></li>
+          <li><code>curated.mapping.item_product</code></li>
+        </ul>
+
+        <h2 id="optional">Optional</h2>
+        <p>Fill these when the business wants the extra attributes. They feed <code>event_dim</code> only and never decide whether a sale is counted.</p>
+        <ul>
+          <li><code>raw.ticket_setup.event_opponent</code></li>
+          <li><code>raw.ticket_setup.theme_nights</code></li>
+        </ul>
+
+        <h2>When code has to change</h2>
+        <details class="more">
+          <summary>The season key is outside the supported range</summary>
+          <div class="body"><p>Supported season keys are listed in <code>product_dim/seed.py</code>. Add the new key there; the job skips keys it does not know.</p></div>
+        </details>
+        <details class="more">
+          <summary>The season adds a new product, category or sub-category</summary>
+          <div class="body"><p>Add it to the product list in <code>product_dim/seed.py</code> and to the report groupings that read it.</p></div>
+        </details>
+        <details class="more">
+          <summary>A Summit HC rule cannot be written as a price-code row</summary>
+          <div class="body"><p>For example, a product that depends on both price code and seat section. Update <code>mapping/item_product.py</code> until the rules table can express it.</p></div>
+        </details>
+
+        <h2 id="validate">Validate</h2>
+        <p>Run the morning after the nightly job. Each query should return rows for the new season.</p>
+        <div class="code-block"><pre><code>-- 1. The event codes are mapped
+select event_code, season_key
+from raw.ticket_setup.event_season_map
+where season_key = 'S27';
+
+-- 2. The season exists for both clubs
+select club, season_key
+from curated.tickets.season_dim
+where season_key = 'S27';
+
+-- 3. Products were built
+select club, season_key, count(*) as products
+from curated.tickets.product_dim
+where season_key = 'S27'
+group by 1, 2;</code></pre></div>
+        <p>If all three return rows and <code>item_product</code> still misses the season, look next at the Summit HC price-code rules in step 2.</p>
+
+        <dl class="doc-footer">
+          <div><dt>Owner</dt><dd>Data engineering</dd></div>
+          <div><dt>Evidence</dt><dd>Run for the S26 season on a dev copy</dd></div>
+          <div><dt>Last validated</dt><dd>Aug 18, 2026</dd></div>
+          <div><dt>Document type</dt><dd>Runbook</dd></div>
+        </dl>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <span>Tideline Sports, Harbor FC, Summit HC and every system, record and amount here are fictional.</span>
+      <a href="https://github.com/jerryshi042003/sexy-documentation">Source</a>
+    </footer>
+  </body>
+</html>

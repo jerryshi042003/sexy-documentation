@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Incident write-up: Summit HC members received two renewal emails on March 4." />
+    <title>Duplicate renewal emails · Tideline Data Docs</title>
+    <link rel="icon" href="../assets/mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <a class="wordmark" href="../"><img src="../assets/mark.svg" width="24" height="24" alt="" />Tideline Data Docs</a>
+        <nav class="site-nav" aria-label="Documents">
+          <a href="forms-to-crm.html">Forms to CRM</a>
+          <a href="source-status.html">Source status</a>
+          <a href="payout-differences.html">Payout check</a>
+          <a href="new-season.html">New season</a>
+          <a href="renewal-email-incident.html" aria-current="page">Incident</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <article class="doc">
+        <h1>Duplicate renewal emails, March 4</h1>
+        <p class="answer">1,842 Summit HC members got the renewal email twice because the audience job read a day-old CRM copy. Pausing the follow-up and rebuilding the audience was the hotfix; making the job wait for the CRM copy is the durable fix; rotating an expiring key was unrelated cleanup.</p>
+
+        <ol class="timeline" aria-label="What happened, oldest first">
+          <li><time>Aug 2025</time><i class="dot verified"></i><div><strong>Audience job built</strong><p>Runs at 02:00 and reads the CRM copy that lands at 01:30. One row per Contact per club.</p></div></li>
+          <li><time>Jan 12</time><i class="dot verified"></i><div><strong>CRM copy moved to 02:30</strong><p>Moved to avoid the vendor's maintenance window. The audience job kept its 02:00 start, so from now on it reads the previous night's copy.</p></div></li>
+          <li><time>Feb 20</time><i class="dot verified"></i><div><strong>Email template changed</strong><p>Our last change before the incident. It touched the template only, not the audience.</p></div></li>
+          <li><time>Mar 3 18:00</time><i class="dot verified"></i><div><strong>Membership team merges 1,842 duplicate Contacts</strong><p>Members who renewed in both the app and the box office. A normal, supported action.</p></div></li>
+          <li><time>Mar 4 02:00</time><i class="dot inferred"></i><div><strong>Audience reads the pre-merge copy</strong><p>Each merged member still appears as two Contacts, so as two rows.</p></div></li>
+          <li><time>Mar 4 09:00</time><i class="dot symptom"></i><div><strong>Renewal email sends twice to 1,842 members</strong><p>Reported at 10:15 with two forwarded examples.</p></div></li>
+          <li><time>Mar 4 11:30</time><i class="dot verified"></i><div><strong>Follow-up paused, audience rebuilt</strong><p>Rebuilt from the 02:30 copy: 1,842 fewer rows, no duplicate emails.</p></div></li>
+        </ol>
+        <div class="legend" aria-hidden="true">
+          <span><i class="verified"></i>Verified</span>
+          <span><i></i>Inferred</span>
+          <span><i class="symptom"></i>Reported symptom</span>
+        </div>
+
+        <div class="split" role="group" aria-label="Actions by purpose">
+          <div><h3>Hotfix</h3><p>Pause the Mar 5 follow-up and rebuild the audience from the fresh copy.</p></div>
+          <div><h3>Durable fix</h3><p>Start the audience job when the CRM copy finishes, not at a clock time.</p></div>
+          <div><h3>Unrelated cleanup</h3><p>Rotate the email-platform key found expiring during the review.</p></div>
+        </div>
+
+        <h2>Trigger and cause</h2>
+        <dl class="facts">
+          <dt>Trigger</dt><dd>The March 3 merge. Merging Contacts is supported and correct; it is not the cause and does not get special handling.</dd>
+          <dt>Cause</dt><dd>Since January 12 the audience job has started before the CRM copy it depends on. Any change made in CRM during the day reaches emails one day late.</dd>
+          <dt>Contained by</dt><dd>Nothing. The email platform does not deduplicate across Contacts, so both rows sent.</dd>
+          <dt>Regression test</dt><dd>A fixture with two Contacts merged after the last copy. The audience must contain the member once, and the job must refuse to start on a copy older than six hours.</dd>
+        </dl>
+
+        <h2>Evidence</h2>
+        <table>
+          <tr><th>Claim</th><th>Checked against</th><th>Class</th></tr>
+          <tr><td>1,842 emails appear twice with different Contact ids in the Mar 4 audience</td><td>Audience table, read-only query</td><td class="tag">Verified, live data</td></tr>
+          <tr><td>Audience job finished at 02:04; CRM copy finished at 02:31</td><td>Job run history</td><td class="tag">Verified, job history</td></tr>
+          <tr><td>Deduplication is by Contact id, not email</td><td>Audience job code</td><td class="tag">Verified, code</td></tr>
+          <tr><td>The Feb 20 change did not touch the audience</td><td>Commit diff</td><td class="tag">Verified, code</td></tr>
+          <tr><td>The Mar 4 audience read the Mar 3 copy</td><td>Copy timestamps versus run start</td><td class="tag">Inferred, high</td></tr>
+        </table>
+
+        <details class="more">
+          <summary>Still unknown</summary>
+          <div class="body">
+            <p>Whether any of the six sends between January 12 and March 3 mailed someone who had opted out that same day. The email platform keeps send logs for 30 days, so only the last two can be checked. Both were clean.</p>
+          </div>
+        </details>
+        <details class="more">
+          <summary>What we did not change, and why</summary>
+          <div class="body">
+            <p>We did not switch deduplication to email address. Family members often share one address and each needs their own renewal. The durable fix removes the stale read instead.</p>
+          </div>
+        </details>
+
+        <dl class="doc-footer">
+          <div><dt>Owner</dt><dd>Data engineering</dd></div>
+          <div><dt>Evidence</dt><dd>Live audience table, job history, code and commit diff</dd></div>
+          <div><dt>Last validated</dt><dd>Mar 6, 2026</dd></div>
+          <div><dt>Document type</dt><dd>Incident write-up</dd></div>
+        </dl>
+      </article>
+    </main>
+    <footer class="site-footer">
+      <span>Tideline Sports, Harbor FC, Summit HC and every system, record and amount here are fictional.</span>
+      <a href="https://github.com/jerryshi042003/sexy-documentation">Source</a>
+    </footer>
+  </body>
+</html>
